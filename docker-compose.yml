@@ -1,0 +1,21 @@
+version: '3'
+
+services: 
+    db:
+        image: postgres:latest
+        environment: 
+            - POSTGRES_DB=cloud-disk-db
+            - POSTGRES_PASSWORD=postgrespassword
+        ports: 
+            - "5432:5432"
+    web:
+        build: .
+        command: python3 manage.py runserver 0.0.0.0:8000
+        ports: 
+            - "8000:8000"
+        depends_on: 
+            - db
+        environment: 
+            AWS_ACCESS_KEY_ID: "AKIAYNGLN57ER5GYWQUY"
+            AWS_SECRET_ACCESS_KEY: "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"
+            AWS_STORAGE_BUCKET_NAME: "django-cloud-disk-files"

@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'cloud-disk-db',
         'USER': 'postgres',
         'PASSWORD': 'postgrespassword',
-        'HOST': os.environ.get('SQL_HOST', 'localhost'),
+        'HOST': 'db',
         'PORT': 5432
     }
 }
