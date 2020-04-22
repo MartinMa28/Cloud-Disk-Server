@@ -6,6 +6,7 @@ django-storages==1.9.1
 docutils==0.15.2
 jmespath==0.9.5
 pkg-resources==0.0.0
+psycopg2-binary==2.8.5
 python-dateutil==2.8.1
 pytz==2019.3
 s3transfer==0.3.3

@@ -25,7 +25,7 @@ SECRET_KEY = '4=g$#y20yo#b-l+8we7iag&o4ls!#aefk@*rp9-o4xy7ch)*&5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'CloudDisk.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'cloud-disk-db',
+        'USER': 'postgres',
+        'PASSWORD': 'postgrespassword',
+        'HOST': os.environ.get('SQL_HOST', 'localhost'),
+        'PORT': 5432
     }
 }
 
