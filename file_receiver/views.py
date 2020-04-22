@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.core.files.storage import FileSystemStorage
+
+from .models import File
 
 # Create your views here.
 def index(request):
@@ -8,12 +9,23 @@ def index(request):
 
 
 def upload(request):
-    context = {}
+    cxt = {}
     if request.method == 'POST':
-        uploaded_file = request.FILES['file']
-        fs = FileSystemStorage()
+        try:
+            uploaded_file = request.FILES['file']
+            file_obj = File(file_name=uploaded_file.name, file_data=uploaded_file)
+            file_obj.save()
 
-        name = fs.save(uploaded_file.name, uploaded_file)
-        context['url'] = fs.url(name)
+            return redirect('file_receiver:file_list')
+        except:
+            cxt['exception'] = 'Failed to upload'
+            return render(request, 'file_receiver/upload.html', context=cxt)
+    else:
+        return render(request, 'file_receiver/upload.html')
 
-    return render(request, 'file_receiver/upload.html', context=context)
+
+def file_list(request):
+    files = File.objects.all()
+    return render(request, 'file_receiver/file_list.html', context={
+        'files': files
+    })
