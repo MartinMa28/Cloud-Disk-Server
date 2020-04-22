@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.views import View
 
 from .models import File
 
@@ -8,9 +9,12 @@ def index(request):
     return HttpResponse("Hello, you are ready to handle files!")
 
 
-def upload(request):
-    cxt = {}
-    if request.method == 'POST':
+class UploadView(View):
+    def get(self, request):
+        return render(request, 'file_receiver/upload.html')
+
+    def post(self, request):
+        cxt = {}
         try:
             uploaded_file = request.FILES['file']
             file_obj = File(file_name=uploaded_file.name, file_data=uploaded_file)
@@ -20,12 +24,11 @@ def upload(request):
         except:
             cxt['exception'] = 'Failed to upload'
             return render(request, 'file_receiver/upload.html', context=cxt)
-    else:
-        return render(request, 'file_receiver/upload.html')
 
 
-def file_list(request):
-    files = File.objects.all()
-    return render(request, 'file_receiver/file_list.html', context={
-        'files': files
-    })
+class FileListView(View):
+    def get(self, request):
+        files = File.objects.all()
+        return render(request, 'file_receiver/file_list.html', context={
+            'files': files
+            })
