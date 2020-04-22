@@ -10,7 +10,7 @@ services:
             - "5432:5432"
     web:
         build: .
-        command: python3 manage.py runserver 0.0.0.0:8000
+        command: gunicorn -w 4 CloudDisk.wsgi -b 0.0.0.0:8000
         ports: 
             - "8000:8000"
         depends_on: 
