@@ -9,6 +9,14 @@ def index(request):
     return HttpResponse("Hello, you are ready to handle files!")
 
 
+def delete_file(request, pk):
+    if request.method == 'POST':
+        target_file = File.objects.get(pk=pk)
+        target_file.delete()
+
+    return redirect('file_receiver:file_list')
+
+
 class UploadView(View):
     def get(self, request):
         return render(request, 'file_receiver/upload.html')
