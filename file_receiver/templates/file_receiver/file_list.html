@@ -1,29 +1,20 @@
 {% extends 'file_receiver/base.html' %}
 
 {% block content %}
-    <h2>Files</h2>
-
-    <table>
-        <thead>
-            <tr>
-                <th>File Name</th>
-                <th>URL</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for file in files %}
-                <tr>
-                    <td>{{ file.file_name }}</td>
-                    <td><a href="{{ file.file_data.url }}">download file</a></td>
-                    <td>
-                        <form method="POST" action="{% url 'file_receiver:delete_file' file.pk %}">
+    <div class="row">
+        {% for file in files %}
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title"> {{ file.file_name }} </div>
+                        <a class="btn btn-primary" href="{{ file.file_data.url }}">Download</a>
+                        <form method="POST" action="{% url 'file_receiver:delete_file' file.pk %}" style="display: inline;">
                             {% csrf_token %}
-                            <button type="submit">Delete</button>
+                            <button type="submit" class="btn btn-secondary">Delete</button>
                         </form>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views import View
 
 from .models import File
@@ -28,10 +28,10 @@ class UploadView(View):
             file_obj = File(file_name=uploaded_file.name, file_data=uploaded_file)
             file_obj.save()
 
-            return redirect('file_receiver:file_list')
+            return JsonResponse({'response': 'Successfully uploaded.'})
         except:
             cxt['exception'] = 'Failed to upload'
-            return render(request, 'file_receiver/upload.html', context=cxt)
+            return render(request, 'file_receiver/file_list.html', context=cxt)
 
 
 class FileListView(View):
