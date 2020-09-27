@@ -1,6 +1,7 @@
 # Cloud-Disk-Server
 Django application server for a distributed cloud disk storage
 
+![UI screenshot](./ui_screenshot.jpg)
 
 ## How to run
 ```shell script
